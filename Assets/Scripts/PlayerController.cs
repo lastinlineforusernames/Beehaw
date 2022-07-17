@@ -10,8 +10,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float movementSpeed = 4;
     [SerializeField]
+    private float accelerationRate = 1;
+    [SerializeField]
     private float jumpForce = 5;
     private Rigidbody2D rigidbody;
+    private bool isJumping;
+
+    private Vector3 velocity;
+    private Vector3 lastPosition;
+
+    [SerializeField]
+    private ProjectileMovement projectile;
+    [SerializeField]
+    private Transform projectileSpawnPoint;
 
     private void Awake()
     {
@@ -24,20 +35,47 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        // set velocity and store position for next frame
+        velocity = (transform.position - lastPosition / Time.deltaTime);
+        lastPosition = transform.position;
+
+        // get player input
+
+        // check collision
+
+        // handle horizontal movement
+
+        // jump apex?
+
+        // update gravity scale
+
+        // handle jump
+
+        // move player
+        
         HorizontalMovement();
-        if (Input.GetKeyDown(KeyCode.Space))
+        Jump();
+        if (Input.GetButtonDown("Fire1"))
         {
-            rigidbody.velocity = Vector3.up * jumpForce;
+            Instantiate(projectile, projectileSpawnPoint.position, transform.rotation);
+        }
+    }
+
+        private void Jump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            isJumping = true;
+            rigidbody.velocity = Vector2.up * jumpForce;
         }
     }
 
     private void HorizontalMovement()
     {
         horizontalInput = Input.GetAxis(HorizontalAxisName);
-        transform.Translate(Vector3.right * horizontalInput * movementSpeed * Time.deltaTime);
+        transform.Translate(Vector2.right * horizontalInput * movementSpeed * Time.deltaTime);
         ChangeDirection();
     }
     void Flip()
@@ -50,11 +88,11 @@ public class PlayerController : MonoBehaviour
 
     void ChangeDirection()
     {
-        if (isFacingRight == false && horizontalInput > 0)
+        if (!isFacingRight && horizontalInput > 0)
         {
             Flip();
         }
-        else if (isFacingRight == true && horizontalInput < 0)
+        else if (isFacingRight && horizontalInput < 0)
         {
             Flip();
         }

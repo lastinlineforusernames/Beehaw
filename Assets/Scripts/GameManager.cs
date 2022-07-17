@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gameManager;
     private const string MainGameSceneName = "02_MainGame";
     private const string GameOverSceneName = "03_GameOver";
     private const string TitleScreenSceneName = "01_TitleScreen";
@@ -12,16 +13,23 @@ public class GameManager : MonoBehaviour
     private bool isGameStarted = false;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (gameManager != null && gameManager != this)
+        {
+            Destroy(this.gameObject);
+        } else
+        {
+            gameManager = this;
+            DontDestroyOnLoad(gameManager);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         // TODO replace this test call with gameover logic
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameOver();
         }
