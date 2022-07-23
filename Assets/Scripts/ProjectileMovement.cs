@@ -15,6 +15,13 @@ public class ProjectileMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // TODO
+        // Check collision and apply damage if damagable
+        Destroy(gameObject);
+    }
+
+    private void OnBecameInvisible()
+    {
         Destroy(gameObject);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
+    private const string TitleScreenSceneName = "01_TitleScreen";
     private const string MainGameSceneName = "02_MainGame";
     private const string GameOverSceneName = "03_GameOver";
-    private const string TitleScreenSceneName = "01_TitleScreen";
-    
+    private const string OptionsSceneName = "04_Options";
+    private const string CreditsSceneName = "05_Credits";
+    private const string GameWinSceneName = "06_GameWin";
     private bool isGameStarted = false;
+    private string currentMenu;
     
     // Start is called before the first frame update
     void Awake()
@@ -32,6 +36,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameOver();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameWin();
         }
     }
 
@@ -59,5 +67,32 @@ public class GameManager : MonoBehaviour
     {
         isGameStarted = false;
         SceneManager.LoadScene(GameOverSceneName);
+    }
+    private void GameWin()
+    {
+        isGameStarted = false;
+        SceneManager.LoadScene(GameWinSceneName);
+    }
+
+
+    public void OpenOptions()
+    {
+        currentMenu = OptionsSceneName;
+        SceneManager.LoadScene(OptionsSceneName, LoadSceneMode.Additive);
+    }
+
+    public void OpenCredits()
+    {
+        currentMenu = CreditsSceneName;
+        SceneManager.LoadScene(CreditsSceneName, LoadSceneMode.Additive);
+    }
+
+    public void CloseMenu()
+    {
+        if (currentMenu == null)
+        {
+            return;
+        }
+        SceneManager.UnloadSceneAsync(currentMenu);
     }
 }
