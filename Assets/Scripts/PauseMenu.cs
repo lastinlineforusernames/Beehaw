@@ -2,55 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+namespace Beehaw.Managers
 {
-    private bool isGamePaused = false;
-    [SerializeField]
-    private GameObject pauseMenu;
-    private PlayerController player;
-
-    // Start is called before the first frame update
-    void Start()
+    public class PauseMenu : MonoBehaviour
     {
-        Time.timeScale = 1;
-        pauseMenu.SetActive(false);
-        player = FindObjectOfType<PlayerController>();
-    }
+        private bool isGamePaused = false;
+        [SerializeField]
+        private GameObject pauseMenu;
+        private PlayerController player;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        // Start is called before the first frame update
+        void Start()
         {
-            HandlePause();
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+            player = FindObjectOfType<PlayerController>();
         }
-    }
 
-    private void HandlePause()
-    {
-        if (!isGamePaused)
+        // Update is called once per frame
+        void Update()
         {
-            PauseGame();
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                HandlePause();
+            }
         }
-        else if (isGamePaused)
+
+        private void HandlePause()
         {
-            ResumeGame();
+            if (!isGamePaused)
+            {
+                PauseGame();
+            }
+            else if (isGamePaused)
+            {
+                ResumeGame();
+            }
         }
-    }
 
-    private void PauseGame()
-    {
-        isGamePaused = true;
-        Time.timeScale = 0;
-        pauseMenu.SetActive(true);
-        player.enabled = false;
-    }
+        private void PauseGame()
+        {
+            isGamePaused = true;
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+            player.enabled = false;
+        }
 
-    public void ResumeGame()
-    {
-        isGamePaused = false;
-        Time.timeScale = 1;
-        pauseMenu.SetActive(false);
-        player.enabled = true;
+        public void ResumeGame()
+        {
+            isGamePaused = false;
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+            player.enabled = true;
+        }
     }
 }
