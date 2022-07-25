@@ -75,6 +75,8 @@ GameObject:
   - component: {fileID: 5609030176759131150}
   - component: {fileID: 5609030176759131144}
   - component: {fileID: 5609030176759131149}
+  - component: {fileID: 910602240}
+  - component: {fileID: 910602241}
   m_Layer: 0
   m_Name: NewPlayer
   m_TagString: Player
@@ -135,7 +137,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -160,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4045fed072fa14942be4b8c0d18c3f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 12
+  maxSpeed: 6.5
   maxAcceleration: 66
   maxDecceleration: 71
   maxTurnSpeed: 40
@@ -181,10 +183,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckRayLength: 0.9
-  collisionOffset: {x: 1, y: 0, z: 0}
+  groundCheckOffset: {x: 0.4, y: 0, z: 0}
+  forwardCheckRayLength: 0.9
+  forwardCheckOffset: {x: 0, y: 0.4, z: 0}
+  verticalOffset: {x: 0, y: 0.1, z: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &910602240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609030175494225367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6a16db2a00f9c4eb670919462b6411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxJumpHeight: 4
+  jumpDuration: 0.566
+  jumpGravityMultiplier: 1
+  fallGravityMultiplier: 4.75
+  maxAirJumps: 0
+  jumpCutoff: 4.23
+  terminalVelocity: 13.9
+  coyoteTime: 0.132
+  jumpBuffer: 0.121
+--- !u!114 &910602241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609030175494225367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb32fcf854e7ee46b54fe8c7a3d2d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 401414636339192177, guid: b54498862e6f9504ebc6673484d5a25b, type: 3}
+  projectileSpawnPoint: {fileID: 8680648016120273953}
+  fireDelay: 0.37
+  maxAmmoCount: 6
 --- !u!1 &5609030177109316697
 GameObject:
   m_ObjectHideFlags: 0

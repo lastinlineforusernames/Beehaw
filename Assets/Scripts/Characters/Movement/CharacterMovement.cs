@@ -5,47 +5,52 @@ namespace Beehaw.Character
     public class CharacterMovement : MonoBehaviour
     {
 
-        private Rigidbody2D rigidbody;
-        private OnGroundChecker groundChecker;
+        protected Rigidbody2D rigidbody;
+        protected OnGroundChecker groundChecker;
 
         [Header("Movement")]
-        [SerializeField, Range(0, 20f)] private float maxSpeed = 12f;
-        [SerializeField, Range(0, 100f)] private float maxAcceleration = 66f;
-        [SerializeField, Range(0, 100f)] private float maxDecceleration = 71f;
-        [SerializeField, Range(0, 100f)] private float maxTurnSpeed = 40f;
-        [SerializeField, Range(0, 10f)] private float friction;
+        [SerializeField, Range(0, 20f)] protected float maxSpeed = 12f;
+        [SerializeField, Range(0, 100f)] protected float maxAcceleration = 66f;
+        [SerializeField, Range(0, 100f)] protected float maxDecceleration = 71f;
+        [SerializeField, Range(0, 100f)] protected float maxTurnSpeed = 40f;
+        [SerializeField, Range(0, 10f)] protected float friction;
 
         [Header("Air Movement")]
-        [SerializeField, Range(0, 100f)] private float maxAirAcceleration = 23f;
-        [SerializeField, Range(0, 100f)] private float maxAirDecceleration = 24f;
-        [SerializeField, Range(0, 100f)] private float maxAirTurnSpeed = 17f;
+        [SerializeField, Range(0, 100f)] protected float maxAirAcceleration = 23f;
+        [SerializeField, Range(0, 100f)] protected float maxAirDecceleration = 24f;
+        [SerializeField, Range(0, 100f)] protected float maxAirTurnSpeed = 17f;
 
-        private float horizontalInput;
-        private Vector2 desiredVelocity;
-        private Vector2 actualVelocity;
-        private float maxSpeedChange;
-        private float acceleration;
-        private float decceleration;
-        private float turnSpeed;
-        private bool isOnGround;
-        private bool isMoving;
+        protected float horizontalInput;
+        protected Vector2 desiredVelocity;
+        protected Vector2 actualVelocity;
+        protected float maxSpeedChange;
+        protected float acceleration;
+        protected float decceleration;
+        protected float turnSpeed;
+        protected bool isOnGround;
+        protected bool isMoving;
 
-        private void Awake()
+        protected void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>();
             groundChecker = GetComponent<OnGroundChecker>();
         }
 
-        private void Update()
+        protected void Update()
         {
-            horizontalInput = Input.GetAxis("Horizontal");
+            UpdateHorizontalMovement();
 
             FlipCharacter();
 
             desiredVelocity = new Vector2(horizontalInput, 0f) * Mathf.Max(maxSpeed - friction, 0f);
         }
 
-        private void FixedUpdate()
+        protected virtual void UpdateHorizontalMovement()
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+        }
+
+        protected void FixedUpdate()
         {
             isOnGround = groundChecker.IsOnGround();
 
@@ -54,7 +59,7 @@ namespace Beehaw.Character
             HandleHorizontalMovement();
         }
 
-        private void HandleHorizontalMovement()
+        protected void HandleHorizontalMovement()
         {
             acceleration = isOnGround ? maxAcceleration : maxAirAcceleration;
             decceleration = isOnGround ? maxDecceleration : maxAirDecceleration;
@@ -79,10 +84,10 @@ namespace Beehaw.Character
             actualVelocity.x = Mathf.MoveTowards(actualVelocity.x, desiredVelocity.x, maxSpeedChange);
 
             rigidbody.velocity = actualVelocity;
-            Debug.Log(desiredVelocity.x + " " + actualVelocity.x);
+            
         }
 
-        private void FlipCharacter()
+        protected void FlipCharacter()
         {
             if (Mathf.Abs(horizontalInput) > 0.01f)
             {
