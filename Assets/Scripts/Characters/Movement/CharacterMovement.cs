@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Beehaw.Character
 {
+    [RequireComponent(typeof(OnGroundChecker))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterMovement : MonoBehaviour
     {
-
+        [Header("Components")]
         protected Rigidbody2D rigidbody;
         protected OnGroundChecker groundChecker;
 
@@ -20,7 +23,9 @@ namespace Beehaw.Character
         [SerializeField, Range(0, 100f)] protected float maxAirDecceleration = 24f;
         [SerializeField, Range(0, 100f)] protected float maxAirTurnSpeed = 17f;
 
+        [Header("Calculations and Checks")]
         protected float horizontalInput;
+        protected float verticalInput;
         protected Vector2 desiredVelocity;
         protected Vector2 actualVelocity;
         protected float maxSpeedChange;
@@ -36,13 +41,19 @@ namespace Beehaw.Character
             groundChecker = GetComponent<OnGroundChecker>();
         }
 
-        protected void Update()
+        protected virtual void Update()
         {
             UpdateHorizontalMovement();
+            UpdateVerticalMovement();
 
             FlipCharacter();
 
-            desiredVelocity = new Vector2(horizontalInput, 0f) * Mathf.Max(maxSpeed - friction, 0f);
+            desiredVelocity = new Vector2(horizontalInput, verticalInput) * Mathf.Max(maxSpeed - friction, 0f);
+        }
+
+        protected virtual void UpdateVerticalMovement()
+        {
+            verticalInput = 0f;
         }
 
         protected virtual void UpdateHorizontalMovement()
@@ -50,13 +61,14 @@ namespace Beehaw.Character
             horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        protected void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             isOnGround = groundChecker.IsOnGround();
 
             actualVelocity = rigidbody.velocity;
 
             HandleHorizontalMovement();
+            
         }
 
         protected void HandleHorizontalMovement()
@@ -99,5 +111,6 @@ namespace Beehaw.Character
                 isMoving = false;
             }
         }
+
     }
 }

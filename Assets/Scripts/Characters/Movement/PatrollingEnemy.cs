@@ -28,12 +28,12 @@ namespace Beehaw.Character
 
         }
 
-        private bool isMovingRight()
+        protected virtual bool isMovingRight()
         {
             return horizontalInput > 0;
         }
 
-        private bool shouldFaceRight()
+        protected virtual bool shouldFaceRight()
         {
             return (
                 (checksLedge && !groundChecker.IsLeftSideOnGround()) 
@@ -42,7 +42,7 @@ namespace Beehaw.Character
                 );
         }
 
-        private bool shouldFaceLeft()
+        protected virtual bool shouldFaceLeft()
         {
             return (
                 (checksLedge && !groundChecker.IsRightSideOnGround()) 

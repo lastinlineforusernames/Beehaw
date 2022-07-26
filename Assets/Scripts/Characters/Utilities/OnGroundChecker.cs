@@ -5,14 +5,12 @@ namespace Beehaw.Character
     public class OnGroundChecker : MonoBehaviour
     {
         [Header("On Ground Check")]
-        private bool isOnGround;
         private bool isRightSideOnGround;
         private bool isLeftSideOnGround;
         [SerializeField] private float groundCheckRayLength = 0.9f;
         [SerializeField] private Vector3 groundCheckOffset;
 
         [Header("Forward Check")]
-        private bool willHitWall;
         private bool willHitWallTop;
         private bool willHitWallBottom;
         [SerializeField] private float forwardCheckRayLength = 0.9f;
@@ -32,19 +30,17 @@ namespace Beehaw.Character
         {
             willHitWallBottom = Physics2D.Raycast(transform.position - forwardCheckOffset + verticalOffset, Vector2.right * Mathf.Sign(transform.localScale.x), forwardCheckRayLength, groundLayer);
             willHitWallTop = Physics2D.Raycast(transform.position + forwardCheckOffset + verticalOffset, Vector2.right * Mathf.Sign(transform.localScale.x), forwardCheckRayLength, groundLayer);
-            willHitWall = willHitWallBottom || willHitWallTop;
         }
 
         private void CheckGroundCollision()
         {
             isRightSideOnGround = Physics2D.Raycast(transform.position + groundCheckOffset, Vector2.down, groundCheckRayLength, groundLayer);
             isLeftSideOnGround = Physics2D.Raycast(transform.position - groundCheckOffset, Vector2.down, groundCheckRayLength, groundLayer);
-            isOnGround = isLeftSideOnGround || isRightSideOnGround;
         }
 
         public bool IsOnGround()
         {
-            return isOnGround;
+            return isLeftSideOnGround || isRightSideOnGround;
         }
 
         public bool IsRightSideOnGround()
@@ -59,12 +55,12 @@ namespace Beehaw.Character
 
         public bool WillHitWall()
         {
-            return willHitWall;
+            return willHitWallBottom || willHitWallTop;
         }
 
         private void OnDrawGizmos()
         {
-            if (isOnGround) 
+            if (IsOnGround()) 
             {
                 Gizmos.color = Color.green; 
             } 
