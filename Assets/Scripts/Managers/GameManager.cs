@@ -66,7 +66,7 @@ namespace Beehaw.Managers
             Application.Quit();
         }
 
-        private void GameOver()
+        public void GameOver()
         {
             isGameStarted = false;
             SceneManager.LoadScene(GameOverSceneName);

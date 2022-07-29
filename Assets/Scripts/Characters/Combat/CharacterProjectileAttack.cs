@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Beehaw.Managers;
+using UnityEngine;
 
 namespace Beehaw.Character
 {
@@ -14,10 +15,17 @@ namespace Beehaw.Character
         private bool isFacingRight;
         private bool canFire = true;
         private int ammo;
+        private GameHud gameHud;
+
+        private void Awake()
+        {
+            gameHud = GameObject.Find("UIManager").GetComponent<GameHud>();            
+        }
 
         private void Start()
         {
             ammo = maxAmmoCount;
+            gameHud.updateAmmo(ammo);
         }
 
         private void Update()
@@ -25,31 +33,48 @@ namespace Beehaw.Character
             isFacingRight = transform.localScale.x == 1;
             if (!canFire)
             {
-                if (fireDelayTimer > fireDelay)
-                {
-                    canFire = true;
-                }
-                fireDelayTimer += Time.deltaTime;
+                UpdateFireTimer();
             }
             else
             {
                 if (Input.GetButtonDown("Fire1") && ammo > 0)
                 {
-                    Instantiate(projectile, projectileSpawnPoint.position, isFacingRight ? Quaternion.identity : Quaternion.Euler(0, -180, 0));
-                    canFire = false;
-                    fireDelayTimer = 0;
-                    ammo -= 1;
+                    FireProjectile();
                 }
             }
 
-            if (Input.GetButtonDown("Fire2")) 
+            if (Input.GetButtonDown("Fire2"))
             {
-                if(ammo < maxAmmoCount)
-                {
-                    ammo = maxAmmoCount;
-                }
+                Reload();
             }
-            
+
+        }
+
+        private void Reload()
+        {
+            if (ammo < maxAmmoCount)
+            {
+                ammo = maxAmmoCount;
+                gameHud.updateAmmo(GetAmmo());
+            }
+        }
+
+        private void FireProjectile()
+        {
+            Instantiate(projectile, projectileSpawnPoint.position, isFacingRight ? Quaternion.identity : Quaternion.Euler(0, -180, 0));
+            canFire = false;
+            fireDelayTimer = 0;
+            ammo -= 1;
+            gameHud.updateAmmo(GetAmmo());
+        }
+
+        private void UpdateFireTimer()
+        {
+            if (fireDelayTimer > fireDelay)
+            {
+                canFire = true;
+            }
+            fireDelayTimer += Time.deltaTime;
         }
 
         public int GetAmmo()
