@@ -1,5 +1,4 @@
 ﻿using Beehaw.Managers;
-using System.Collections;
 using UnityEngine;
 
 namespace Beehaw.Character
@@ -8,7 +7,6 @@ namespace Beehaw.Character
     {
         private GameManager gameManager;
         private GameHud gameHud; 
-
 
         private void Awake()
         {

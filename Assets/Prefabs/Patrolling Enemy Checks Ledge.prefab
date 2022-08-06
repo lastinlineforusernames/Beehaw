@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3549790970483870023, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
       propertyPath: m_Name
-      value: Patrolling Enemy Checks Ledge
+      value: Patrolling Enemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3549790970483870136, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
       propertyPath: checksLedge

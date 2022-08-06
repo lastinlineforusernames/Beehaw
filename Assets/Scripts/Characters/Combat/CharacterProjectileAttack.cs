@@ -54,6 +54,7 @@ namespace Beehaw.Character
         {
             if (ammo < maxAmmoCount)
             {
+                // TODO reload one shot at a time and add interrupts
                 ammo = maxAmmoCount;
                 gameHud.updateAmmo(GetAmmo());
             }
@@ -66,6 +67,7 @@ namespace Beehaw.Character
             fireDelayTimer = 0;
             ammo -= 1;
             gameHud.updateAmmo(GetAmmo());
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Gunshot");
         }
 
         private void UpdateFireTimer()

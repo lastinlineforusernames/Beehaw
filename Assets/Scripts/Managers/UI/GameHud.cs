@@ -1,5 +1,4 @@
 ﻿using Beehaw.Character;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +8,6 @@ namespace Beehaw.Managers
     {
         private PlayerHealth playerHealth;
         private CharacterProjectileAttack playerAttack;
-        private int health;
-        private int ammo;
         [SerializeField] private Sprite[] healthImageArray;
         [SerializeField] private Sprite[] ammoImageArray;
         [SerializeField] private Image healthImage;
@@ -22,12 +19,6 @@ namespace Beehaw.Managers
         {
             playerAttack = GameObject.Find("Player").GetComponent<CharacterProjectileAttack>();
             playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        }
-
-        private void Start()
-        {
-            health = playerHealth.getHealthPoints();
-            ammo = playerAttack.GetAmmo();
         }
 
         public void updateHealth(int health)

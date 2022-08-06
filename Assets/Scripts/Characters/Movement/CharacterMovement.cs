@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Beehaw.Character
 {
-    [RequireComponent(typeof(OnGroundChecker))]
+    [RequireComponent(typeof(CollisionChecker))]
     [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterMovement : MonoBehaviour
     {
         [Header("Components")]
         protected Rigidbody2D rigidbody;
-        protected OnGroundChecker groundChecker;
+        protected CollisionChecker groundChecker;
 
         [Header("Movement")]
         [SerializeField, Range(0, 20f)] protected float maxSpeed = 12f;
@@ -35,10 +35,10 @@ namespace Beehaw.Character
         protected bool isOnGround;
         protected bool isMoving;
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>();
-            groundChecker = GetComponent<OnGroundChecker>();
+            groundChecker = GetComponent<CollisionChecker>();
         }
 
         protected virtual void Update()

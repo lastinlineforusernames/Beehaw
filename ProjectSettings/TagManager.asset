@@ -7,6 +7,8 @@ TagManager:
   - PauseMenu
   - GameManager
   - Enemy
+  - Moving Platform
+  - IgnoreCollision
   layers:
   - Default
   - TransparentFX

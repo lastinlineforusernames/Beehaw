@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Beehaw.Managers
@@ -9,18 +7,17 @@ namespace Beehaw.Managers
         private bool isGamePaused = false;
         [SerializeField]
         private GameObject pauseMenu;
-        private PlayerController player;
+        // TODO creat PlayerController class to collect all player input and pass to movement and ability classes so pausing can disable gameplay.
+        //private PlayerController player;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
-            player = FindObjectOfType<PlayerController>();
+            //player = FindObjectOfType<PlayerController>();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -45,7 +42,7 @@ namespace Beehaw.Managers
             isGamePaused = true;
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
-            player.enabled = false;
+            //player.enabled = false;
         }
 
         public void ResumeGame()
@@ -53,7 +50,7 @@ namespace Beehaw.Managers
             isGamePaused = false;
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
-            player.enabled = true;
+            //player.enabled = true;
         }
     }
 }

@@ -7,12 +7,12 @@ namespace Beehaw.Character
     {
         [SerializeField] private CinemachineVirtualCamera camera;
         [SerializeField] private float deadZoneY = 0.003853565f;
-        private OnGroundChecker groundChecker;
+        private CollisionChecker groundChecker;
         private CinemachineFramingTransposer transposer;
 
         private void Awake()
         {
-            groundChecker = GetComponent<OnGroundChecker>();
+            groundChecker = GetComponent<CollisionChecker>();
             transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
 

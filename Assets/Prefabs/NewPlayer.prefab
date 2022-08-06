@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: CameraTarget
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2457740928744387268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77,6 +77,8 @@ GameObject:
   - component: {fileID: 5609030176759131149}
   - component: {fileID: 910602240}
   - component: {fileID: 910602241}
+  - component: {fileID: 910602242}
+  - component: {fileID: 910602250}
   m_Layer: 0
   m_Name: NewPlayer
   m_TagString: Player
@@ -119,7 +121,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -182,13 +184,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckRayLength: 0.9
-  groundCheckOffset: {x: 0.4, y: 0, z: 0}
+  groundCheckOffset: {x: 0.25, y: 0, z: 0}
   forwardCheckRayLength: 0.9
   forwardCheckOffset: {x: 0, y: 0.4, z: 0}
   verticalOffset: {x: 0, y: 0.1, z: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &910602240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6a16db2a00f9c4eb670919462b6411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxJumpHeight: 4
+  maxJumpHeight: 4.1
   jumpDuration: 0.566
   jumpGravityMultiplier: 1
   fallGravityMultiplier: 4.75
@@ -226,6 +231,33 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 8680648016120273953}
   fireDelay: 0.37
   maxAmmoCount: 6
+--- !u!114 &910602242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609030175494225367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104221b01776c5849aa0b988b2a3271e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 0}
+  deadZoneY: 0.003853565
+--- !u!114 &910602250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609030175494225367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd8a0785eca74647af901c3c070e220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 11
 --- !u!1 &5609030177109316697
 GameObject:
   m_ObjectHideFlags: 0

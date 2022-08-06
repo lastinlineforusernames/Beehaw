@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Beehaw.Character
 {
@@ -8,7 +6,7 @@ namespace Beehaw.Character
     {
         private GameObject player;
 
-        private void Awake()
+        protected override void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
             base.Awake();

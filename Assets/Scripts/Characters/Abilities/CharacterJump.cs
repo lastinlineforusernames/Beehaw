@@ -7,7 +7,7 @@ namespace Beehaw.Character
         private const float CoyoteTimeMaxTime = 0.03f;
         
         private Rigidbody2D rigidbody;
-        private OnGroundChecker groundChecker;
+        private CollisionChecker groundChecker;
         private Vector2 actualVelocity;
 
         [Header("Jump")]
@@ -35,7 +35,7 @@ namespace Beehaw.Character
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>();
-            groundChecker = GetComponent<OnGroundChecker>();
+            groundChecker = GetComponent<CollisionChecker>();
             gravityScale = 1f;
         }
 
@@ -181,6 +181,7 @@ namespace Beehaw.Character
 
                 actualVelocity.y += jumpSpeed;
                 isJumping = true;
+                FMODUnity.RuntimeManager.PlayOneShot("Event:/Jump");
             }
 
             if (jumpBuffer == 0)

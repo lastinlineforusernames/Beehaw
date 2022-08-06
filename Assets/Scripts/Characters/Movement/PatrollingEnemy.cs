@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Beehaw.Character
 {
@@ -11,7 +10,7 @@ namespace Beehaw.Character
 
         public PatrollingEnemy()
         {
-            horizontalInput = 1;
+            horizontalInput = -1;
         }
 
         protected override void UpdateHorizontalMovement()

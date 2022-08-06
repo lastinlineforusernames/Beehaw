@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,8 +15,7 @@ namespace Beehaw.Managers
         private bool isGameStarted = false;
         private string currentMenu;
 
-        // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
             if (gameManager != null && gameManager != this)
             {
@@ -32,8 +28,7 @@ namespace Beehaw.Managers
             }
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             // TODO replace this test call with gameover logic
             if (Input.GetKeyDown(KeyCode.Escape))
