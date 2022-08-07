@@ -3,42 +3,60 @@ using UnityEngine;
 
 public class ProjectileMovement : MonoBehaviour
 {
-    [SerializeField] private float projectileSpeed;
-    [SerializeField] private int damageAmount;
+    [Header("Projectile")]
+    [SerializeField, Range(0, 25f)] private float projectileSpeed;
+    [SerializeField, Range(1, 5)] private int damageAmount;
+    private float projectileLifetime = 5f;
 
     private void Update()
     {
         transform.position += transform.right * projectileSpeed * Time.deltaTime;
+        if (projectileLifetime < 0)
+        {
+            Destroy(gameObject);
+        }
+        projectileLifetime -= Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("IgnoreCollision"))
+        GameObject hitObject = collision.gameObject;
+        if (hitObject.CompareTag("IgnoreCollision"))
         {
             return;
         }
-        if (collision.gameObject.GetComponent<Health>())
-        {
-            collision.gameObject.GetComponent<Health>().applyDamage(damageAmount);
-        }
+        ApplyDamageToHitObject(hitObject);
+        AddKnockback(hitObject);
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("IgnoreCollision"))
+        GameObject hitObject = collision.gameObject;
+        if (hitObject.CompareTag("IgnoreCollision"))
         {
             return;
         }
-        if (collision.gameObject.GetComponent<Health>())
-        {
-            collision.gameObject.GetComponent<Health>().applyDamage(damageAmount);
-        }
+        ApplyDamageToHitObject(hitObject);
+        AddKnockback(hitObject);
         Destroy(gameObject);
     }
 
-    private void OnBecameInvisible()
+    private void AddKnockback(GameObject hitObject)
     {
-        Destroy(gameObject);
+        Rigidbody2D rigidbody = hitObject.GetComponent<Rigidbody2D>();
+        if (rigidbody != null)
+        {
+            rigidbody.AddForce((hitObject.transform.position - transform.position).normalized * projectileSpeed, ForceMode2D.Impulse);
+        }
+    }
+
+    private void ApplyDamageToHitObject(GameObject hitObject)
+    {
+        Health health = hitObject.GetComponent<Health>();
+        if (health != null)
+        {
+            health.applyDamage(damageAmount);
+        }
     }
 }

@@ -5,11 +5,14 @@ namespace Beehaw.Character
 {
     [RequireComponent(typeof(CollisionChecker))]
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(CharacterController))]
+
     public class CharacterMovement : MonoBehaviour
     {
         [Header("Components")]
         protected Rigidbody2D rigidbody;
         protected CollisionChecker groundChecker;
+        protected CharacterController controller;
 
         [Header("Movement")]
         [SerializeField, Range(0, 20f)] protected float maxSpeed = 12f;
@@ -39,10 +42,12 @@ namespace Beehaw.Character
         {
             rigidbody = GetComponent<Rigidbody2D>();
             groundChecker = GetComponent<CollisionChecker>();
+            controller = GetComponent<CharacterController>();
         }
 
         protected virtual void Update()
         {
+
             UpdateHorizontalMovement();
             UpdateVerticalMovement();
 
@@ -58,7 +63,7 @@ namespace Beehaw.Character
 
         protected virtual void UpdateHorizontalMovement()
         {
-            horizontalInput = Input.GetAxis("Horizontal");
+            horizontalInput = controller.GetHorizontalInput();
         }
 
         protected virtual void FixedUpdate()
@@ -68,7 +73,7 @@ namespace Beehaw.Character
             actualVelocity = rigidbody.velocity;
 
             HandleHorizontalMovement();
-            
+     
         }
 
         protected void HandleHorizontalMovement()
@@ -111,6 +116,5 @@ namespace Beehaw.Character
                 isMoving = false;
             }
         }
-
     }
 }

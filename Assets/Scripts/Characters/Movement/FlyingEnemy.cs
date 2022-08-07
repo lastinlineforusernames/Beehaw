@@ -26,19 +26,25 @@ namespace Beehaw.Character
 
         protected override void UpdateVerticalMovement()
         {
-            if (shouldMoveDown())
+            if (player != null)
             {
-                verticalInput = -1;
-            }
-            else if (shouldMoveUp())
-            {
-                verticalInput = 1;
+                if (shouldMoveDown())
+                {
+                    verticalInput = -1;
+                }
+                else if (shouldMoveUp())
+                {
+                    verticalInput = 1;
+                }
             }
             
         }
         protected override void UpdateHorizontalMovement()
         {
-            base.UpdateHorizontalMovement();
+            if (player != null)
+            {
+                base.UpdateHorizontalMovement();
+            }
         }
 
         protected override bool shouldFaceRight()

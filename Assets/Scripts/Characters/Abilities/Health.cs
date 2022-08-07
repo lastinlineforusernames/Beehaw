@@ -4,9 +4,8 @@ namespace Beehaw.Character
 {
     public class Health : MonoBehaviour
     {
-
         [SerializeField] private int healthPoints;
-        
+
         public int getHealthPoints()
         {
             return healthPoints;
@@ -25,5 +24,6 @@ namespace Beehaw.Character
         {
             Destroy(gameObject);
         }
+
     }
 }

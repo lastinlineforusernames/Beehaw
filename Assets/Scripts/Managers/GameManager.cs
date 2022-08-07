@@ -6,6 +6,8 @@ namespace Beehaw.Managers
     public class GameManager : MonoBehaviour
     {
         public static GameManager gameManager;
+        public const int PlayerLayerMask = 8;
+        public const int EnemyLayerMask = 6;
         private const string TitleScreenSceneName = "01_TitleScreen";
         private const string MainGameSceneName = "02_MainGame";
         private const string GameOverSceneName = "03_GameOver";
@@ -30,11 +32,7 @@ namespace Beehaw.Managers
 
         private void Update()
         {
-            // TODO replace this test call with gameover logic
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                GameOver();
-            }
+            // TODO replace this test call with gamewin logic
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 GameWin();
@@ -45,6 +43,7 @@ namespace Beehaw.Managers
         {
             isGameStarted = true;
             SceneManager.LoadScene(MainGameSceneName);
+            Physics2D.IgnoreLayerCollision(PlayerLayerMask, EnemyLayerMask, false);
         }
 
         public void EndGame()

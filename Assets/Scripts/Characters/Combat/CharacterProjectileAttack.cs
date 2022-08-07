@@ -3,23 +3,30 @@ using UnityEngine;
 
 namespace Beehaw.Character
 {
+    [RequireComponent(typeof(CharacterController))]
+
     public class CharacterProjectileAttack : MonoBehaviour
     {
+        [Header("Components")]
+        private CharacterController controller;
+        private GameHud gameHud;
 
         [Header("Combat")]
         [SerializeField] private ProjectileMovement projectile;
         [SerializeField] private Transform projectileSpawnPoint;
         [SerializeField, Range(0.1f, 2f)] private float fireDelay;
         [SerializeField, Range(1, 6)] private int maxAmmoCount = 6;
+
+        [Header("Calculations and Checks")]
         private float fireDelayTimer = 0;
         private bool isFacingRight;
         private bool canFire = true;
         private int ammo;
-        private GameHud gameHud;
 
         private void Awake()
         {
-            gameHud = GameObject.Find("UIManager").GetComponent<GameHud>();            
+            gameHud = GameObject.Find("UIManager").GetComponent<GameHud>();
+            controller = GetComponent<CharacterController>();
         }
 
         private void Start()
@@ -37,13 +44,13 @@ namespace Beehaw.Character
             }
             else
             {
-                if (Input.GetButtonDown("Fire1") && ammo > 0)
+                if (controller.ShouldFirePrimary() && ammo > 0)
                 {
                     FireProjectile();
                 }
             }
 
-            if (Input.GetButtonDown("Fire2"))
+            if (controller.ShouldFireSecondary())
             {
                 Reload();
             }

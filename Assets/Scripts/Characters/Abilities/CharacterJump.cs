@@ -2,13 +2,19 @@
 
 namespace Beehaw.Character
 {
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CollisionChecker))]
+    [RequireComponent(typeof(Rigidbody2D))]
+
     public class CharacterJump : MonoBehaviour
     {
+        [Header("Constants")]
         private const float CoyoteTimeMaxTime = 0.03f;
         
+        [Header("Components")]
         private Rigidbody2D rigidbody;
-        private CollisionChecker groundChecker;
-        private Vector2 actualVelocity;
+        private CollisionChecker collisionChecker;
+        private CharacterController controller;
 
         [Header("Jump")]
         [SerializeField, Range(0, 20f)] private float maxJumpHeight = 4.4f;
@@ -21,6 +27,8 @@ namespace Beehaw.Character
         [SerializeField, Range(0, 0.3f)] private float coyoteTime = 0.2f;
         [SerializeField, Range(0f, 0.3f)] private float jumpBuffer = 0.2f;
 
+        [Header("Calculations and Checks")]
+        private Vector2 actualVelocity;
         private float jumpSpeed;
         private float gravityScale;
         private float gravityMultiplier;
@@ -35,19 +43,20 @@ namespace Beehaw.Character
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>();
-            groundChecker = GetComponent<CollisionChecker>();
+            collisionChecker = GetComponent<CollisionChecker>();
+            controller = GetComponent<CharacterController>();
             gravityScale = 1f;
         }
 
         private void GetJumpInput()
         {
-            if (Input.GetButtonDown("Jump"))
+            if (controller.IsJumpButtonPressed())
             {
                 desiredJump = true;
                 isPressingJump = true;
             }
 
-            if (Input.GetButtonUp("Jump"))
+            if (controller.IsJumpButtonReleased())
             {
                 isPressingJump = false;
             }
@@ -59,7 +68,7 @@ namespace Beehaw.Character
 
             SetupPhysics();
 
-            isOnGround = groundChecker.IsOnGround();
+            isOnGround = collisionChecker.IsOnGround();
 
             HandleDesiredJump();
 
