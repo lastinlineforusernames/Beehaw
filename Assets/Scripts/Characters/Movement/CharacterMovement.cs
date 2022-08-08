@@ -104,7 +104,7 @@ namespace Beehaw.Character
             
         }
 
-        protected void FlipCharacter()
+        protected virtual void FlipCharacter()
         {
             if (Mathf.Abs(horizontalInput) > 0.01f)
             {
