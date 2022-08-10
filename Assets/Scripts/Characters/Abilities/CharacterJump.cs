@@ -40,6 +40,8 @@ namespace Beehaw.Character
         private bool isOnGround;
         private bool isJumping;
 
+        public bool IsJumping { get => isJumping; set => isJumping = value; }
+
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>();

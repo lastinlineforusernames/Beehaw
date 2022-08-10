@@ -7,6 +7,7 @@ namespace Beehaw.Character
         [Header("On Ground Check")]
         private bool isRightSideOnGround;
         private bool isLeftSideOnGround;
+        private float onGroundTime = 0;
         [SerializeField] private float groundCheckRayLength = 0.9f;
         [SerializeField] private Vector3 groundCheckOffset;
 
@@ -31,6 +32,14 @@ namespace Beehaw.Character
         {
             CheckGroundCollision();
             CheckForwardCollision();
+            if (IsOnGround())
+            {
+                onGroundTime += Time.deltaTime;
+            } 
+            else
+            {
+                onGroundTime = 0;
+            }
         }
 
         private void CheckForwardCollision()
@@ -63,6 +72,11 @@ namespace Beehaw.Character
         public bool WillHitWall()
         {
             return willHitWallBottom || willHitWallTop;
+        }
+
+        public float GetOnGroundTime()
+        {
+            return onGroundTime;
         }
 
         private void OnDrawGizmos()
