@@ -74,11 +74,11 @@ GameObject:
   - component: {fileID: 5609030175494225368}
   - component: {fileID: 5609030176759131150}
   - component: {fileID: 5609030176759131149}
-  - component: {fileID: 910602240}
-  - component: {fileID: 910602241}
+  - component: {fileID: 9078168110878535309}
   - component: {fileID: -4854208648387420505}
   - component: {fileID: 4641310866119512496}
   - component: {fileID: 3796483683131778035}
+  - component: {fileID: 2062250956}
   m_Layer: 6
   m_Name: Wasperado
   m_TagString: Enemy
@@ -174,7 +174,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &910602240
+--- !u!114 &9078168110878535309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,34 +183,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5609030175494225367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba6a16db2a00f9c4eb670919462b6411, type: 3}
+  m_Script: {fileID: 11500000, guid: 5879d9fcdfff123498dabdfa3d71ffa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxJumpHeight: 4.1
   jumpDuration: 0.566
   jumpGravityMultiplier: 1
   fallGravityMultiplier: 4.75
-  maxAirJumps: 1
+  maxAirJumps: 0
   jumpCutoff: 2
   terminalVelocity: 13.9
-  coyoteTime: 0.132
+  coyoteTime: 0.0132
   jumpBuffer: 0.121
---- !u!114 &910602241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5609030175494225367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bb32fcf854e7ee46b54fe8c7a3d2d12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 401414636339192177, guid: b54498862e6f9504ebc6673484d5a25b, type: 3}
-  projectileSpawnPoint: {fileID: 8680648016120273953}
-  fireDelay: 0.15
-  maxAmmoCount: 6
 --- !u!114 &-4854208648387420505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +221,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fightBounds: {fileID: 0}
+  shotsToFire: 0
+  delayBetweenShots: 0
+  holdJumpTime: 0.118
+  timeBeforeDoubleJump: 0
+  timeToRun: 1.5
+  timeToJump: 2
+  timeToShoot: 1.5
 --- !u!114 &3796483683131778035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,14 +240,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad89ce4b18bf4b747a0226116b12d73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10.5
+  maxSpeed: 11
   maxAcceleration: 66
-  maxDecceleration: 71
-  maxTurnSpeed: 40
+  maxDecceleration: 11.7
+  maxTurnSpeed: 48.9
   friction: 0
-  maxAirAcceleration: 23
-  maxAirDecceleration: 24
-  maxAirTurnSpeed: 17
+  maxAirAcceleration: 66.4
+  maxAirDecceleration: 32.7
+  maxAirTurnSpeed: 70.8
+--- !u!114 &2062250956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609030175494225367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d5fba34deac9345a273fd8cf0bbfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 401414636339192177, guid: b54498862e6f9504ebc6673484d5a25b, type: 3}
+  projectileSpawnPoint: {fileID: 8680648016120273953}
+  fireDelay: 0.29
+  maxAmmoCount: 3
 --- !u!1 &5609030177109316697
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +339,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.99501103, b: 0, a: 1}
+  m_Color: {r: 0.33962262, g: 0.3385986, b: 0.078497685, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

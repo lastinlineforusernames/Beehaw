@@ -13,6 +13,10 @@ namespace Beehaw.Character
         private void Awake()
         {
             groundChecker = GetComponent<CollisionChecker>();
+        }
+
+        private void Start()
+        {
             transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
 

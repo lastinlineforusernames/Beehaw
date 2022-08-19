@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Moving Platform
   - IgnoreCollision
+  - CameraTarget
   layers:
   - Default
   - TransparentFX

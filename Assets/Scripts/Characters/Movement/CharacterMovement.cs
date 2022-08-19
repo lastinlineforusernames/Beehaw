@@ -5,14 +5,14 @@ namespace Beehaw.Character
 {
     [RequireComponent(typeof(CollisionChecker))]
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerController))]
 
     public class CharacterMovement : MonoBehaviour
     {
         [Header("Components")]
         protected Rigidbody2D rigidbody;
         protected CollisionChecker groundChecker;
-        protected CharacterController controller;
+        protected PlayerController controller;
 
         [Header("Movement")]
         [SerializeField, Range(0, 20f)] protected float maxSpeed = 12f;
@@ -42,7 +42,7 @@ namespace Beehaw.Character
         {
             rigidbody = GetComponent<Rigidbody2D>();
             groundChecker = GetComponent<CollisionChecker>();
-            controller = GetComponent<CharacterController>();
+            controller = GetComponent<PlayerController>();
         }
 
         protected virtual void Update()

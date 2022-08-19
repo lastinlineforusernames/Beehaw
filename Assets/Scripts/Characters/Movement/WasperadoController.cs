@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace Beehaw.Character
 {
-    public class WasperadoController : CharacterController
+    public class WasperadoController : PlayerController
     {
         [Header("Components")]
         [SerializeField] private BossFightBounds fightBounds;
         private Collider2D collider;
         private CollisionChecker collisionChecker;
-        private CharacterJump jump;
-        private CharacterProjectileAttack attack;
         private GameObject player;
 
         [Header("Combat Logic Inputs")]
@@ -35,8 +33,6 @@ namespace Beehaw.Character
         {
             collider = GetComponent<Collider2D>();
             collisionChecker = GetComponent<CollisionChecker>();
-            jump = GetComponent<CharacterJump>();
-            attack = GetComponent<CharacterProjectileAttack>();
             transformOffset = collider.bounds.extents.x;
         }
 
@@ -49,20 +45,20 @@ namespace Beehaw.Character
         {
             if (fightBounds.IsBossFightStarted() && player != null)
             {
-                shouldFireSecondary = false;
-                //shouldFirePrimary = false;
-                isJumpButtonPressed = false;
+                // Clamp position to fight volume
                 transform.position = new Vector3(
                     Mathf.Clamp(transform.position.x, 
                     fightBounds.getMinX() + transformOffset, 
                     fightBounds.getMaxX() - transformOffset), 
                     transform.position.y, 0);
-                // TODO Setup action timers and logic for behaviors
+                // Combat Logic
+                shouldFireSecondary = false;
+                shouldFirePrimary = false;
+                isJumpButtonPressed = false;
                 currentActionPhase = actionPhase;
                 switch (actionPhase)
                 {
                     case 0: // Jump
-                        Debug.Log("Jump");
                         if (actionTimer == 0)
                         {
                             horizontalInput = facePlayer();
@@ -79,7 +75,6 @@ namespace Beehaw.Character
                         }
                         break;
                     case 1: // Run
-                        Debug.Log("Run");
                         if (actionTimer == 0)
                         {
                             horizontalInput = facePlayer();
@@ -90,14 +85,16 @@ namespace Beehaw.Character
                         }
                         break;
                     case 2: // Shoot
-                        Debug.Log("Shoot");
                         if (actionTimer == 0)
                         {
                             horizontalInput = facePlayer();
                             shouldFireSecondary = true;
                             shouldFirePrimary = true;
+                        } 
+                        else if (actionTimer < timeToShoot)
+                        {
+                            shouldFirePrimary = true;
                         }
-                        
                         horizontalInput = 0;
                         if (actionTimer > timeToShoot)
                         {
@@ -110,8 +107,6 @@ namespace Beehaw.Character
                 {
                     actionTimer = 0;
                 }
-                //verticalInput = 0;
-                //shouldFireSecondary = false;
                 isJumpButtonReleased = holdJumpTimer < 0;
                 isJumpButtonPressed = !isJumpButtonReleased;
                 holdJumpTimer -= Time.deltaTime;
@@ -121,24 +116,6 @@ namespace Beehaw.Character
         private float facePlayer()
         {
             return (player.transform.position - transform.position).normalized.x;
-        }
-
-        private float evaluateMoveDirection()
-        {
-            float moveDirection;
-            if(transform.position.x - 1 < fightBounds.getMinX())
-            {
-                moveDirection = 1;
-            }
-            else if (transform.position.x + 1 > fightBounds.getMaxX())
-            {
-                moveDirection = -1;
-            }
-            else
-            {
-                moveDirection = (player.transform.position - transform.position).normalized.x;
-            }
-            return moveDirection;
         }
     }
 }

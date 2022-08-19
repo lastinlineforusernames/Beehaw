@@ -3,92 +3,74 @@ using UnityEngine;
 
 namespace Beehaw.Character
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerController))]
 
-    public class CharacterProjectileAttack : MonoBehaviour
+    public class CharacterProjectileAttack : ProjectileAttack
     {
         [Header("Components")]
-        private CharacterController controller;
         private GameHud gameHud;
 
-        [Header("Combat")]
-        [SerializeField] private ProjectileMovement projectile;
-        [SerializeField] private Transform projectileSpawnPoint;
-        [SerializeField, Range(0.1f, 2f)] private float fireDelay;
-        [SerializeField, Range(1, 6)] private int maxAmmoCount = 6;
+        [Header("Calculations & Checks")]
+        private bool isReloading;
+        private float reloadTimer;
+        [SerializeField] private float reloadTime = 0.2f;
+        private bool canPlayReloadAudio = true;
 
-        [Header("Calculations and Checks")]
-        private float fireDelayTimer = 0;
-        private bool isFacingRight;
-        private bool canFire = true;
-        private int ammo;
-
-        private void Awake()
+        protected override void Awake()
         {
             gameHud = GameObject.Find("UIManager").GetComponent<GameHud>();
-            controller = GetComponent<CharacterController>();
+            base.Awake();
         }
 
-        private void Start()
+        protected override void Start()
         {
-            ammo = maxAmmoCount;
+            base.Start();
             gameHud.updateAmmo(ammo);
         }
 
-        private void Update()
+        protected override void Update()
         {
-            isFacingRight = transform.localScale.x == 1;
-            if (!canFire)
+            base.Update();
+            if (isReloading && reloadTimer < 0)
             {
-                UpdateFireTimer();
-            }
-            else
-            {
-                if (controller.ShouldFirePrimary() && ammo > 0)
+                reloadTimer = reloadTime;
+                if (canPlayReloadAudio)
                 {
-                    FireProjectile();
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Reload");
+                    canPlayReloadAudio = false;
                 }
+                if (ammo < maxAmmoCount)
+                {
+                    ammo += 1;
+                }
+                else
+                {
+                    isReloading = false;
+                    canPlayReloadAudio = true;
+                }
+                gameHud.updateAmmo(GetAmmo());
             }
-
-            if (controller.ShouldFireSecondary())
-            {
-                Reload();
-            }
-
+            reloadTimer -= Time.deltaTime;
         }
 
-        private void Reload()
+        protected override void Reload()
         {
             if (ammo < maxAmmoCount)
             {
-                // TODO reload one shot at a time and add interrupts
-                ammo = maxAmmoCount;
-                gameHud.updateAmmo(GetAmmo());
+                isReloading = true;
             }
         }
 
-        private void FireProjectile()
+        protected override void FireProjectile()
         {
-            Instantiate(projectile, projectileSpawnPoint.position, isFacingRight ? Quaternion.identity : Quaternion.Euler(0, -180, 0));
-            canFire = false;
-            fireDelayTimer = 0;
-            ammo -= 1;
+            base.FireProjectile();
             gameHud.updateAmmo(GetAmmo());
+
+        }
+
+        protected override void PlayProjectileAudio()
+        {
             FMODUnity.RuntimeManager.PlayOneShot("event:/Gunshot");
-        }
-
-        private void UpdateFireTimer()
-        {
-            if (fireDelayTimer > fireDelay)
-            {
-                canFire = true;
-            }
-            fireDelayTimer += Time.deltaTime;
-        }
-
-        public int GetAmmo()
-        {
-            return ammo;
         }
     }
 }

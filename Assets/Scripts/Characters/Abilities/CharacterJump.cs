@@ -2,7 +2,7 @@
 
 namespace Beehaw.Character
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerController))]
     [RequireComponent(typeof(CollisionChecker))]
     [RequireComponent(typeof(Rigidbody2D))]
 
@@ -14,7 +14,7 @@ namespace Beehaw.Character
         [Header("Components")]
         private Rigidbody2D rigidbody;
         private CollisionChecker collisionChecker;
-        private CharacterController controller;
+        private PlayerController controller;
 
         [Header("Jump")]
         [SerializeField, Range(0, 20f)] private float maxJumpHeight = 4.4f;
@@ -39,6 +39,7 @@ namespace Beehaw.Character
         private bool isPressingJump;
         private bool isOnGround;
         private bool isJumping;
+        private bool canPlayJumpAudio = true;
 
         public bool IsJumping { get => isJumping; set => isJumping = value; }
 
@@ -46,7 +47,7 @@ namespace Beehaw.Character
         {
             rigidbody = GetComponent<Rigidbody2D>();
             collisionChecker = GetComponent<CollisionChecker>();
-            controller = GetComponent<CharacterController>();
+            controller = GetComponent<PlayerController>();
             gravityScale = 1f;
         }
 
@@ -163,6 +164,7 @@ namespace Beehaw.Character
                 if (isOnGround)
                 {
                     isJumping = false;
+                    canPlayJumpAudio = true;
                 }
                 gravityMultiplier = gravityScale;
             }
@@ -192,13 +194,23 @@ namespace Beehaw.Character
 
                 actualVelocity.y += jumpSpeed;
                 isJumping = true;
-                FMODUnity.RuntimeManager.PlayOneShot("Event:/Jump");
+
+                if (canPlayJumpAudio)
+                {
+                    PlayJumpAudio();
+                    canPlayJumpAudio = false;
+                }
             }
 
             if (jumpBuffer == 0)
             {
                 desiredJump = false;
             }
+        }
+
+        protected virtual void PlayJumpAudio()
+        {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Jump");
         }
     }
 }

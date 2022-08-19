@@ -1,3 +1,4 @@
+using Beehaw.Character;
 using UnityEngine;
 
 namespace Beehaw.Managers
@@ -7,14 +8,13 @@ namespace Beehaw.Managers
         private bool isGamePaused = false;
         [SerializeField]
         private GameObject pauseMenu;
-        // TODO creat PlayerController class to collect all player input and pass to movement and ability classes so pausing can disable gameplay.
-        //private PlayerController player;
+        private PlayerController player;
 
         private void Start()
         {
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
-            //player = FindObjectOfType<PlayerController>();
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
 
         private void Update()
@@ -42,7 +42,8 @@ namespace Beehaw.Managers
             isGamePaused = true;
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
-            //player.enabled = false;
+            player.enabled = false;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Pause");
         }
 
         public void ResumeGame()
@@ -50,7 +51,8 @@ namespace Beehaw.Managers
             isGamePaused = false;
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
-            //player.enabled = true;
+            player.enabled = true;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Unpause");
         }
     }
 }
