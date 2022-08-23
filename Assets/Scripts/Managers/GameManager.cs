@@ -38,15 +38,6 @@ namespace Beehaw.Managers
             audioManager.playTitleBGM();
         }
 
-        private void Update()
-        {
-            // TODO replace this test call with gamewin logic
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                GameWin();
-            }
-        }
-
         public void StartGame()
         {
             isGameStarted = true;
