@@ -19,7 +19,7 @@ namespace Beehaw.Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetButtonDown("Pause"))
             {
                 HandlePause();
             }
