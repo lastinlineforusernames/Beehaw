@@ -853,7 +853,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 635.8606, y: 120}
+  m_SizeDelta: {x: 670, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1936515899
 MonoBehaviour:
@@ -877,10 +877,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: '
 
-    Composer & Sound Designer - Isle
+    Composer & Sound Designer - Ian Lain Hatch
 
-    Programmer & Game Designer
-    - Kat'
+    Programmer & Game
+    Designer - Kat Fleck'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

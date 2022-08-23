@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3549790970483870023, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
       propertyPath: m_Name
-      value: Patrolling Enemy (1)
+      value: Patrolling Enemy Checks Ledge
       objectReference: {fileID: 0}
     - target: {fileID: 3549790970483870136, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
       propertyPath: checksLedge
@@ -69,6 +69,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3549790970483870139, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352453468254312745, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.4266258
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352453468254312745, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352453468254312745, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352453468254312745, guid: b4b5f7ca0cb73264a8cac9c51bfb490b, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

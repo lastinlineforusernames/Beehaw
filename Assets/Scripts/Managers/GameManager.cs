@@ -16,6 +16,8 @@ namespace Beehaw.Managers
         private const string GameWinSceneName = "06_GameWin";
         private bool isGameStarted = false;
         private string currentMenu;
+        private AudioManager audioManager;
+        
 
         private void Awake()
         {
@@ -28,6 +30,12 @@ namespace Beehaw.Managers
                 gameManager = this;
                 DontDestroyOnLoad(gameManager);
             }
+        }
+
+        private void Start()
+        {
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+            audioManager.playTitleBGM();
         }
 
         private void Update()
@@ -44,12 +52,14 @@ namespace Beehaw.Managers
             isGameStarted = true;
             SceneManager.LoadScene(MainGameSceneName);
             Physics2D.IgnoreLayerCollision(PlayerLayerMask, EnemyLayerMask, false);
+            audioManager.playGameBGM();
         }
 
         public void EndGame()
         {
             isGameStarted = false;
             SceneManager.LoadScene(TitleScreenSceneName);
+            audioManager.playTitleBGM();
         }
 
         public void QuitGame()
@@ -64,11 +74,13 @@ namespace Beehaw.Managers
         {
             isGameStarted = false;
             SceneManager.LoadScene(GameOverSceneName);
+            audioManager.playGameOverBGM();
         }
-        private void GameWin()
+        public void GameWin()
         {
             isGameStarted = false;
             SceneManager.LoadScene(GameWinSceneName);
+            audioManager.playVictoryBGM();
         }
 
 
